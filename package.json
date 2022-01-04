@@ -1,0 +1,31 @@
+{
+  "name": "account-manager-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jocosiol/Account-Manager-System.git"
+  },
+  "author": "Moshe C",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jocosiol/Account-Manager-System/issues"
+  },
+  "homepage": "https://github.com/jocosiol/Account-Manager-System#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3",
+    "postgrator": "^5.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
