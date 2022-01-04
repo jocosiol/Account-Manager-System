@@ -1,10 +1,6 @@
-CREATE TABLE IF NOT EXISTS `account` (
+CREATE TABLE IF NOT EXISTS `person` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `balance` float,
-  `dailyWithdrawlLimit` float,
-  `activeFlag` boolean,
-  `accountType` int,
-  `createdDate` timestamp,
-  `personId` int,
-  FOREIGN KEY (personId) REFERENCES person(id)
+  `name` varchar(255),
+  `document` varchar(255),
+  `birthDate` date
 );

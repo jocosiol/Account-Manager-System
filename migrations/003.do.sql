@@ -1,7 +1,10 @@
-CREATE TABLE IF NOT EXISTS `transaction` (
+CREATE TABLE IF NOT EXISTS `account` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `value` float,
-  `transactionDate` timestamp,
-  `accountId` int,
-  FOREIGN KEY (accountId) REFERENCES account(id)
+  `balance` float,
+  `dailyWithdrawlLimit` float,
+  `activeFlag` boolean,
+  `accountType` int,
+  `createdDate` timestamp,
+  `personId` int,
+  FOREIGN KEY (personId) REFERENCES person(id)
 );
