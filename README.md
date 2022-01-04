@@ -26,3 +26,8 @@
 
 
 </br>![ERD AMS_DB](img/AMS_DB.png)
+
+
+## Endpoints
+
+1. [POST - "/account/create"] : Create an account and person (client). 

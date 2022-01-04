@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const { postgrator } = require("./lib/db");
+const accountRoute = require("./routes/account");
+
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -9,9 +11,8 @@ const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
 
-// app.use("/pets", petsRoute);
-// app.use('/users', usersRoute);
-// app.use('/status', statusRoute);
+app.use('/account', accountRoute);
+
 
 postgrator
   .migrate()
