@@ -30,4 +30,6 @@
 
 ## Endpoints
 
-1. [POST - "/account/create"] : Create an account and person (client). 
+### [POST - "/account/create"] : Create an account and person (client). 
+- Expect:
+- Return:
