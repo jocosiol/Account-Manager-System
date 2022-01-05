@@ -1,5 +1,13 @@
 # Account-Manager-System
 
+## How to run
+```
+ npm install
+```
+```
+ npm run dev
+ ```
+
 ## The Challenge</br>
 
 > Develop the REST API resources that perform banking transactions.
