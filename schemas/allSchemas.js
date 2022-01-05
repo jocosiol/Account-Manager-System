@@ -12,3 +12,8 @@ exports.createNewAccountSchema = S.object()
 .prop('dailyWithdrawlLimit', S.number().required())
 .prop('accountType', S.number().required())
 .valueOf();
+
+//amountDeposit
+exports.newDepositSchema = S.object()
+.prop('amountDeposit', S.number().required())
+.valueOf();

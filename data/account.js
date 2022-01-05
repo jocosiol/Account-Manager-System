@@ -20,6 +20,26 @@ async function createNewPerson(name, document, birthDate) {
       console.log(err);
     }
   }
+  async function newDeposit(accountId, amountDeposit){
+    try {
+      const sql = SQL `INSERT INTO transaction (value, transactionDate, accountId) VALUES (${amountDeposit}, CURRENT_DATE(), ${accountId})`;
+      const newTransaction = await query(sql);
+      const sqlUpdateBalance = SQL `UPDATE account SET balance = balance + ${amountDeposit} WHERE Id = ${accountId}`;
+      const newBalance = await query(sqlUpdateBalance);
+      return newBalance;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  async function getAccountById(id) {
+    try {
+      const sql = `SELECT * FROM account WHERE id='${id}'`;
+      const rows = await query(sql);
+      return rows[0];
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
 
-  module.exports = { createNewPerson, createNewAccount };
+  module.exports = { createNewPerson, createNewAccount, newDeposit, getAccountById };

@@ -7,7 +7,7 @@
 ### Minimum Scope
 
 - [x] Implement path that performs the creation of an account.
-- [ ] Implement path that performs deposit operation on an account.
+- [x] Implement path that performs deposit operation on an account.
 - [ ] Implement path that performs balance inquiry operation on a given account.
 - [ ] Implement path that performs withdrawal operation on an account.
 - [ ] Implement path that performs the blocking of an account.
@@ -36,3 +36,10 @@
 - **Return:** 
     - True: *Message: 'Person and Account successfully created'.*
     - False: *Error Status 403.*
+
+### [POST - "/account/:id/deposit"] : Create a deposit.
+
+- **Expect:** { transaction.value }.
+- **Return:** 
+    - True: *Message: '${transaction.value} was deposited successfully'.*
+    - False: *Error Status 404.*
