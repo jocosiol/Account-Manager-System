@@ -4,7 +4,7 @@ const SQL = require("@nearform/sql");
 
 async function createNewPerson(name, document, birthDate) {
     try {
-      const sql = `INSERT INTO person (name, document, birthDate) VALUES ('${name}', '${document}', STR_TO_DATE('${birthDate}', '%d-%m-%Y'))`;
+      const sql = SQL `INSERT INTO person (name, document, birthDate) VALUES ('${name}', '${document}', STR_TO_DATE('${birthDate}', '%d-%m-%Y'))`;
       const createdPerson = await query(sql);
       return createdPerson;
     } catch (err) {
@@ -13,7 +13,7 @@ async function createNewPerson(name, document, birthDate) {
   }
   async function createNewAccount(dailyWithdrawlLimit, accountType, personId) {
     try {
-      const sql = `INSERT INTO account (balance, dailyWithdrawlLimit, activeFlag, accountType, createdDate, personId) VALUES (0, ${dailyWithdrawlLimit}, 1, ${accountType}, CURRENT_DATE(), ${personId})`;
+      const sql = SQL `INSERT INTO account (balance, dailyWithdrawlLimit, activeFlag, accountType, createdDate, personId) VALUES (0, ${dailyWithdrawlLimit}, 1, ${accountType}, CURRENT_DATE(), ${personId})`;
       const createdAccount = await query(sql);
       return createdAccount;
     } catch (err) {
@@ -33,7 +33,7 @@ async function createNewPerson(name, document, birthDate) {
   }
   async function getAccountById(id) {
     try {
-      const sql = `SELECT * FROM account WHERE id='${id}'`;
+      const sql = SQL `SELECT * FROM account WHERE id=${id}`;
       const rows = await query(sql);
       return rows[0];
     } catch (err) {
@@ -43,7 +43,7 @@ async function createNewPerson(name, document, birthDate) {
 
   async function getBalanceByAccountId(id) {
     try {
-      const sql = `SELECT balance FROM account WHERE id='${id}'`;
+      const sql = SQL `SELECT balance FROM account WHERE id='${id}'`;
       const rows = await query(sql);
       return rows[0];
     } catch (err) {
@@ -63,5 +63,16 @@ async function createNewPerson(name, document, birthDate) {
     }
   }
 
+  
+  async function blockAccount(id){
+    try {
+      const sql = SQL `UPDATE account SET activeFlag=0 WHERE id=${id}`;
+      const blocked = await query(sql);
+      return blocked;
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-  module.exports = { createNewPerson, createNewAccount, newDeposit, getAccountById, getBalanceByAccountId, newWithdraw };
+
+  module.exports = { createNewPerson, createNewAccount, newDeposit, getAccountById, getBalanceByAccountId, newWithdraw, blockAccount };
