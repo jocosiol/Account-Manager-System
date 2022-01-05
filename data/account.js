@@ -51,5 +51,17 @@ async function createNewPerson(name, document, birthDate) {
     }
   }
 
+  async function newWithdraw(accountId, amountWithdraw){
+    try {
+      const sql = SQL `INSERT INTO transaction (value, transactionDate, accountId) VALUES (-${amountWithdraw}, CURRENT_DATE(), ${accountId})`;
+      const newTransaction = await query(sql);
+      const sqlUpdateBalance = SQL `UPDATE account SET balance = balance - ${amountWithdraw} WHERE Id = ${accountId} AND balance >= ${amountWithdraw}`;
+      const newBalance = await query(sqlUpdateBalance);
+      return newBalance;
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-  module.exports = { createNewPerson, createNewAccount, newDeposit, getAccountById, getBalanceByAccountId };
+
+  module.exports = { createNewPerson, createNewAccount, newDeposit, getAccountById, getBalanceByAccountId, newWithdraw };

@@ -2,12 +2,15 @@ const { getAccountById } = require('../data/account');
 
 async function validAccountId (req, res, next) {
   const { id } = req.params;
-  const user = await getAccountById(id);
-  if (!user) {
-    res.status(404).send(`User with id: ${id} does not exist`);
+  const account = await getAccountById(id);
+  if (!account) {
+    res.status(404).send(`Account with id: ${id} does not exist`);
+    return;
+  } else if (!account.activeFlag) {
+    res.status(404).send(`Account with id: ${id} is not active`);
     return;
   }
-  req.body.user = user;
+  req.body.account = account;
   next();
 };
 

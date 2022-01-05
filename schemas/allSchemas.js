@@ -17,3 +17,7 @@ exports.createNewAccountSchema = S.object()
 exports.newDepositSchema = S.object()
 .prop('amountDeposit', S.number().required())
 .valueOf();
+
+exports.newWithdrawSchema = S.object()
+.prop('amountWithdraw', S.number().required())
+.valueOf();

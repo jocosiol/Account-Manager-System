@@ -9,7 +9,7 @@
 - [x] Implement path that performs the creation of an account.
 - [x] Implement path that performs deposit operation on an account.
 - [x] Implement path that performs balance inquiry operation on a given account.
-- [ ] Implement path that performs withdrawal operation on an account.
+- [x] Implement path that performs withdrawal operation on an account.
 - [ ] Implement path that performs the blocking of an account.
 - [ ] Implement path that retrieves the account statement of transactions.
 
@@ -23,27 +23,31 @@
 - Elaborate design of the project architecture.
 
 ---
-## Entity-Relationship Diagram of SQL DataBase
 
+## Entity-Relationship Diagram of SQL DataBase
 
 </br>![ERD AMS_DB](img/AMS_DB.png)
 
 ---
+
 ## Endpoints
 
 ### [POST - "/account/create"] : Create an account and person/client.
 
-- **Expect:** {person.name, person.document, person.birthDate, account.dailyWithdrawlLimit, account.accountType}.
-- **Return:** *Message: 'Person and Account successfully created'.* 
-
+- **Expect:** _{person.name, person.document, person.birthDate, account.dailyWithdrawlLimit, account.accountType}._
+- **Return:** _Message: 'Person and Account successfully created'._
 
 ### [POST - "/account/:id/deposit"] : Create a deposit.
 
-- **Expect:** *params and { transaction.value }.*
-- **Return:** *Message: '${transaction.value} was deposited successfully'.*
-  
+- **Expect:** _params and { "amountDeposit": transaction.value }._
+- **Return:** _Message: '${transaction.value} was deposited successfully'._
 
 ### [GET - "/account/:id/balance"] : Create a deposit.
 
-- **Expect:** *params*
-- **Return:** *{ "balance": number}*
+- **Expect:** _params_
+- **Return:** _{ "balance": number}_
+
+### [POST - "/account/:id/withdraw"] : Withdraw amount.
+
+- **Expect:** _params and { "amountWithdraw": transaction.value }._
+- **Return:** _Message: '${transaction.value} have been withdrawn successfully'._

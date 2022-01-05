@@ -5,9 +5,10 @@ const {
   createNewAccount,
   newDeposit,
   getBalanceByAccountId,
+  newWithdraw,
 } = require("../data/account");
 const { validateBody } = require("../middleware/validateBody");
-const { validDepositValue } = require("../middleware/validDepositValue");
+const { validTransactionValue } = require("../middleware/validTransactionValue");
 const { validAccountId } = require("../middleware/validAccountId");
 const Schemas = require("../schemas/allSchemas");
 
@@ -35,7 +36,7 @@ router.post(
 router.post(
   "/:id/deposit",
   validateBody(Schemas.newDepositSchema),
-  validDepositValue,
+  validTransactionValue,
   validAccountId,
   async (req, res) => {
     try {
@@ -58,5 +59,22 @@ router.get("/:id/balance", validAccountId, async (req, res) => {
     console.log(err);
   }
 });
+
+router.post(
+  "/:id/withdraw",
+  validateBody(Schemas.newWithdrawSchema),
+  validTransactionValue,
+  validAccountId,
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { amountWithdraw } = req.body;
+      const newBalance = await newWithdraw(id, amountWithdraw);
+      res.status(201).send(`${amountWithdraw} have been withdrawn successfully`);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
 
 module.exports = router;
