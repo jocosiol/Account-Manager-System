@@ -82,11 +82,11 @@ router.post(
   }
 );
 
-router.put("/:id/block", async (req, res) => {
+router.put("/:id/block", validAccountId, async (req, res) => {
   try {
     const { id } = req.body;
     const blockedAccount = await blockAccount(id);
-    res.status(201).send(`${id} has been blocked`);
+    res.status(201).send(`Account ${id} has been blocked`);
   } catch (err) {
     console.log(err);
   }
