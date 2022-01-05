@@ -52,7 +52,7 @@
 - **Expect:** _params and { "amountWithdraw": transaction.value }._
 - **Return:** _Message: '${transaction.value} have been withdrawn successfully'._
 
-### [PUT - "/account/:id/block"] : Withdraw amount.
+### [PUT - "/account/:id/block"] : Block Account.
 
 - **Expect:** _{ "id": account.id }._
 - **Return:** _Message: 'Account ${account.id} has been blocked'._
