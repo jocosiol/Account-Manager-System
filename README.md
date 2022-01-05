@@ -57,7 +57,7 @@
 - **Expect:** _{ "id": account.id }._
 - **Return:** _Message: 'Account ${account.id} has been blocked'._
 
-### [get - "/account/:id/statment"] : Geting Account Statment.
+### [GET - "/account/:id/statment"] : Geting Account Statment.
 
 - **Expect:** _{ "id": account.id }._
 - **Return:** _Array of Object [{"id": 20, "value": 2000, "transactionDate": "2022-01-04T22:00:00.000Z"},...]_
