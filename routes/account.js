@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { createNewPerson, createNewAccount } = require("../data/account");
+const {validateBody} = require("../middleware/validateBody");
+const Schemas = require("../schemas/allSchemas");
 
-router.post("/create", async (req, res) => {
+router.post("/create", validateBody(Schemas.createNewPersonSchema), validateBody(Schemas.createNewAccountSchema) ,async (req, res) => {
   try {
     const { name, document, birthDate, dailyWithdrawlLimit, accountType } =
       req.body;

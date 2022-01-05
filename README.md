@@ -6,7 +6,7 @@
 
 ### Minimum Scope
 
-- [ ] Implement path that performs the creation of an account.
+- [x] Implement path that performs the creation of an account.
 - [ ] Implement path that performs deposit operation on an account.
 - [ ] Implement path that performs balance inquiry operation on a given account.
 - [ ] Implement path that performs withdrawal operation on an account.
@@ -15,12 +15,12 @@
 
 ### What Will Be Differential & Evaluated
 
-- [ ] Implement statement by period.
-- [ ] Develop execution manual.
-- [ ] Prepare documentation.
-- [ ] Develop tests.
-- [ ] Implementation of points of failure and resilience.
-- [ ] Elaborate design of the project architecture.
+- Implement statement by period.
+- Develop execution manual.
+- Prepare documentation.
+- Develop tests.
+- Implementation of points of failure and resilience.
+- Elaborate design of the project architecture.
 
 ## </br>Entity-Relationship Diagram of SQL DataBase
 
@@ -30,4 +30,9 @@
 
 ## Endpoints
 
-1. [POST - "/account/create"] : Create an account and person (client). 
+### [POST - "/account/create"] : Create an account and person/client.
+
+- **Expect:** {person.name, person.document, person.birthDate, account.dailyWithdrawlLimit, account.accountType}.
+- **Return:** 
+    - True: *Message: 'Person and Account successfully created'.*
+    - False: *Error Status 403.*

@@ -4,7 +4,7 @@ const SQL = require("@nearform/sql");
 
 async function createNewPerson(name, document, birthDate) {
     try {
-      const sql = `INSERT INTO person (name, document, birthDate) VALUES ('${name}', '${document}', STR_TO_DATE('${birthDate}', '%m-%d-%Y'))`;
+      const sql = `INSERT INTO person (name, document, birthDate) VALUES ('${name}', '${document}', STR_TO_DATE('${birthDate}', '%d-%m-%Y'))`;
       const createdPerson = await query(sql);
       return createdPerson;
     } catch (err) {

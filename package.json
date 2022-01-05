@@ -20,13 +20,16 @@
   "homepage": "https://github.com/jocosiol/Account-Manager-System#readme",
   "dependencies": {
     "@nearform/sql": "^1.9.0",
+    "ajv": "^8.8.2",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
+    "fluent-json-schema": "^3.0.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
     "pg": "^8.7.1",
-    "postgrator": "^4.1.1"
+    "postgrator": "^4.1.1",
+    "supertest": "^6.1.6"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
