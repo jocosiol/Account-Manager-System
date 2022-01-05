@@ -41,5 +41,15 @@ async function createNewPerson(name, document, birthDate) {
     }
   }
 
+  async function getBalanceByAccountId(id) {
+    try {
+      const sql = `SELECT balance FROM account WHERE id='${id}'`;
+      const rows = await query(sql);
+      return rows[0];
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-  module.exports = { createNewPerson, createNewAccount, newDeposit, getAccountById };
+
+  module.exports = { createNewPerson, createNewAccount, newDeposit, getAccountById, getBalanceByAccountId };

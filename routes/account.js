@@ -4,6 +4,7 @@ const {
   createNewPerson,
   createNewAccount,
   newDeposit,
+  getBalanceByAccountId,
 } = require("../data/account");
 const { validateBody } = require("../middleware/validateBody");
 const { validDepositValue } = require("../middleware/validDepositValue");
@@ -47,5 +48,15 @@ router.post(
     }
   }
 );
+
+router.get("/:id/balance", validAccountId, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const balance = await getBalanceByAccountId(id);
+    res.status(201).send(balance);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 module.exports = router;
