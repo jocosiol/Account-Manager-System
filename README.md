@@ -1,11 +1,11 @@
-# Account-Manager-System
+# Account Manager System
 
 ## Execution Manual for development
 ```
  npm install
 ```
 ```
- npm run dev
+ npm run start
  ```
 
 ## The Challenge</br>
@@ -45,32 +45,32 @@
 - **Expect:** _{person.name, person.document, person.birthDate, account.dailyWithdrawlLimit, account.accountType}._
 - **Return:** _Message: 'Person and Account successfully created'._
 
-### [POST - "/account/:id/deposit"] : Create a deposit.
+### [POST - "/account/deposit"] : Create a deposit.
 
 - **Expect:** _{ "id": account.id, "amountDeposit": transaction.value }._
 - **Return:** _Message: '${transaction.value} was deposited successfully'._
 
-### [GET - "/account/:id/balance"] : Create a deposit.
+### [GET - "/account/balance"] : Get balance.
 
-- **Expect:** _params_
+- **Expect:** _{ "id": account.id }_
 - **Return:** _Object { "balance": number}_
 
-### [POST - "/account/:id/withdraw"] : Withdraw amount.
+### [POST - "/account/withdraw"] : Withdraw amount.
 
 - **Expect:** _{ "id": account.id, "amountWithdraw": transaction.value }._
 - **Return:** _Message: '${transaction.value} have been withdrawn successfully'._
 
-### [PUT - "/account/:id/block"] : Block Account.
+### [PUT - "/account/block"] : Block Account.
 
 - **Expect:** _{ "id": account.id }._
 - **Return:** _Message: 'Account ${account.id} has been blocked'._
 
-### [GET - "/account/:id/statment"] : Geting Account Statment.
+### [GET - "/account/statment"] : Geting Account Statment.
 
 - **Expect:** _{ "id": account.id }._
 - **Return:** _Array of Object [{"id": 20, "value": 2000, "transactionDate": "2022-01-04T22:00:00.000Z"},...]_
 
-### [GET - "/account/:id/statment/period"] : Geting Account Statment filter by period.
+### [GET - "/account/statment/period"] : Geting Account Statment filter by period.
 
 - **Expect:** _{ "id": account.id, "from": "Date(YYYY-MM-DD)", "to": "Date(YYYY-MM-DD)" }._
 - **Return:** _Array of Object [{"id": 20, "value": 2000, "transactionDate": "2022-01-04T22:00:00.000Z"},...]_

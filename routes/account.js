@@ -8,7 +8,7 @@ const {
   newWithdraw,
   blockAccount,
   getStatmentByAccountId,
-  getStatmentByAccountIdInPeriod
+  getStatmentByAccountIdInPeriod,
 } = require("../data/account");
 const { validateBody } = require("../middleware/validateBody");
 const {
@@ -31,7 +31,7 @@ router.post(
         accountType,
         person.insertId
       );
-      res.send("Person and Account successfully created");
+      res.status(201).json("Person and Account successfully created");
     } catch (err) {
       console.log(err);
     }
@@ -39,7 +39,7 @@ router.post(
 );
 
 router.post(
-  "/:id/deposit",
+  "/deposit",
   validateBody(Schemas.newDepositSchema),
   validTransactionValue,
   validAccountId,
@@ -47,25 +47,25 @@ router.post(
     try {
       const { id, amountDeposit } = req.body;
       const newBalance = await newDeposit(id, amountDeposit);
-      res.status(201).send(`${amountDeposit} was deposited successfully`);
+      res.status(201).json("Deposited successfully");
     } catch (err) {
       console.log(err);
     }
   }
 );
 
-router.get("/:id/balance", validAccountId, async (req, res) => {
+router.get("/balance", validAccountId, async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.body;
     const balance = await getBalanceByAccountId(id);
-    res.status(201).send(balance);
+    res.status(201).json(balance);
   } catch (err) {
     console.log(err);
   }
 });
 
 router.post(
-  "/:id/withdraw",
+  "/withdraw",
   validateBody(Schemas.newWithdrawSchema),
   validTransactionValue,
   validAccountId,
@@ -82,7 +82,7 @@ router.post(
   }
 );
 
-router.put("/:id/block", validAccountId, async (req, res) => {
+router.put("/block", validAccountId, async (req, res) => {
   try {
     const { id } = req.body;
     const blockedAccount = await blockAccount(id);
@@ -92,7 +92,7 @@ router.put("/:id/block", validAccountId, async (req, res) => {
   }
 });
 
-router.get("/:id/statment", validAccountId, async (req, res) => {
+router.get("/statment", validAccountId, async (req, res) => {
   try {
     const { id } = req.body;
     const statment = await getStatmentByAccountId(id);
@@ -102,7 +102,7 @@ router.get("/:id/statment", validAccountId, async (req, res) => {
   }
 });
 
-router.get("/:id/statment/period", validAccountId, async (req, res) => {
+router.get("/statment/period", validAccountId, async (req, res) => {
   try {
     const { id, from, to } = req.body;
     const statmentInPeriod = await getStatmentByAccountIdInPeriod(id, from, to);
