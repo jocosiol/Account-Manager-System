@@ -39,7 +39,7 @@
 
 ### [POST - "/account/:id/deposit"] : Create a deposit.
 
-- **Expect:** _params and { "amountDeposit": transaction.value }._
+- **Expect:** _{ "id": account.id, "amountDeposit": transaction.value }._
 - **Return:** _Message: '${transaction.value} was deposited successfully'._
 
 ### [GET - "/account/:id/balance"] : Create a deposit.
@@ -49,10 +49,15 @@
 
 ### [POST - "/account/:id/withdraw"] : Withdraw amount.
 
-- **Expect:** _params and { "amountWithdraw": transaction.value }._
+- **Expect:** _{ "id": account.id, "amountWithdraw": transaction.value }._
 - **Return:** _Message: '${transaction.value} have been withdrawn successfully'._
 
 ### [PUT - "/account/:id/block"] : Block Account.
 
 - **Expect:** _{ "id": account.id }._
 - **Return:** _Message: 'Account ${account.id} has been blocked'._
+
+### [get - "/account/:id/statment"] : Geting Account Statment.
+
+- **Expect:** _{ "id": account.id }._
+- **Return:** _Array of Object [{"id": 20, "value": 2000, "transactionDate": "2022-01-04T22:00:00.000Z"},...]_

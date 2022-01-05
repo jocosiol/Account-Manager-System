@@ -7,6 +7,7 @@ const {
   getBalanceByAccountId,
   newWithdraw,
   blockAccount,
+  getStatmentByAccountId,
 } = require("../data/account");
 const { validateBody } = require("../middleware/validateBody");
 const {
@@ -43,8 +44,7 @@ router.post(
   validAccountId,
   async (req, res) => {
     try {
-      const { id } = req.params;
-      const { amountDeposit } = req.body;
+      const { id, amountDeposit } = req.body;
       const newBalance = await newDeposit(id, amountDeposit);
       res.status(201).send(`${amountDeposit} was deposited successfully`);
     } catch (err) {
@@ -70,8 +70,7 @@ router.post(
   validAccountId,
   async (req, res) => {
     try {
-      const { id } = req.params;
-      const { amountWithdraw } = req.body;
+      const { id, amountWithdraw } = req.body;
       const newBalance = await newWithdraw(id, amountWithdraw);
       res
         .status(201)
@@ -87,6 +86,16 @@ router.put("/:id/block", validAccountId, async (req, res) => {
     const { id } = req.body;
     const blockedAccount = await blockAccount(id);
     res.status(201).send(`Account ${id} has been blocked`);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.get("/:id/statment", validAccountId, async (req, res) => {
+  try {
+    const { id } = req.body;
+    const statment = await getStatmentByAccountId(id);
+    res.status(201).send(statment);
   } catch (err) {
     console.log(err);
   }
