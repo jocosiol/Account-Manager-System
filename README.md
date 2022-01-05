@@ -11,7 +11,7 @@
 - [x] Implement path that performs balance inquiry operation on a given account.
 - [x] Implement path that performs withdrawal operation on an account.
 - [x] Implement path that performs the blocking of an account.
-- [ ] Implement path that retrieves the account statement of transactions.
+- [x] Implement path that retrieves the account statement of transactions.
 
 ### What Will Be Differential & Evaluated
 
