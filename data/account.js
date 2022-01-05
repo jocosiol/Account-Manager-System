@@ -83,6 +83,16 @@ async function getStatmentByAccountId(id) {
   }
 }
 
+async function getStatmentByAccountIdInPeriod(id, from, to) {
+  try {
+    const sql =`SELECT id, value, transactionDate from transaction WHERE accountId=${id} AND transactionDate BETWEEN '${from}' AND '${to}';`;
+    const rows = await query(sql);
+    return rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 module.exports = {
   createNewPerson,
   createNewAccount,
@@ -92,4 +102,5 @@ module.exports = {
   newWithdraw,
   blockAccount,
   getStatmentByAccountId,
+  getStatmentByAccountIdInPeriod
 };

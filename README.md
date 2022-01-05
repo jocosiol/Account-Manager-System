@@ -1,6 +1,6 @@
 # Account-Manager-System
 
-## How to run
+## Execution Manual for development
 ```
  npm install
 ```
@@ -53,7 +53,7 @@
 ### [GET - "/account/:id/balance"] : Create a deposit.
 
 - **Expect:** _params_
-- **Return:** _{ "balance": number}_
+- **Return:** _Object { "balance": number}_
 
 ### [POST - "/account/:id/withdraw"] : Withdraw amount.
 
@@ -68,4 +68,9 @@
 ### [GET - "/account/:id/statment"] : Geting Account Statment.
 
 - **Expect:** _{ "id": account.id }._
+- **Return:** _Array of Object [{"id": 20, "value": 2000, "transactionDate": "2022-01-04T22:00:00.000Z"},...]_
+
+### [GET - "/account/:id/statment/period"] : Geting Account Statment filter by period.
+
+- **Expect:** _{ "id": account.id, "from": "Date(YYYY-MM-DD)", "to": "Date(YYYY-MM-DD)" }._
 - **Return:** _Array of Object [{"id": 20, "value": 2000, "transactionDate": "2022-01-04T22:00:00.000Z"},...]_

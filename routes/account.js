@@ -8,6 +8,7 @@ const {
   newWithdraw,
   blockAccount,
   getStatmentByAccountId,
+  getStatmentByAccountIdInPeriod
 } = require("../data/account");
 const { validateBody } = require("../middleware/validateBody");
 const {
@@ -96,6 +97,16 @@ router.get("/:id/statment", validAccountId, async (req, res) => {
     const { id } = req.body;
     const statment = await getStatmentByAccountId(id);
     res.status(201).send(statment);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.get("/:id/statment/period", validAccountId, async (req, res) => {
+  try {
+    const { id, from, to } = req.body;
+    const statmentInPeriod = await getStatmentByAccountIdInPeriod(id, from, to);
+    res.status(201).send(statmentInPeriod);
   } catch (err) {
     console.log(err);
   }
