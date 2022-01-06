@@ -36,15 +36,14 @@ describe("AMS API", () => {
       .expect("Content-Type", /json/)
       .expect(201)
       .then((res) => {
-
-        personId=res.body.personId
-        accountId=res.body.accountId
+        personId = res.body.personId;
+        accountId = res.body.accountId;
 
         expect(res.body).toEqual(
-            expect.objectContaining({
-              personId: expect.any(Number),
-              accountId: expect.any(Number)
-            })
+          expect.objectContaining({
+            personId: expect.any(Number),
+            accountId: expect.any(Number),
+          })
         );
       });
   });
@@ -87,11 +86,11 @@ describe("AMS API", () => {
 
   it('GET /account/statement --> Array of Object [{"id": 20, "value": 2000, "transactionDate": "2022-01-04T22:00:00.000Z"},...]', () => {
     return request(app)
-      .get("/account/statement")
+      .get("/account/statment")
       .send({
         id: accountId,
       })
-      .expect(200)
+      .expect(201)
       .then((res) => {
         expect(res.body).toEqual(
           expect.arrayContaining([
@@ -105,13 +104,15 @@ describe("AMS API", () => {
       });
   });
 
-  it('GET /account/statement/period --> Array of Object [{"id": 20, "value": 2000, "transactionDate": "2022-01-04T22:00:00.000Z"},...]', () => {
+  it('GET /account/statment/period --> Array of Object [{"id": 20, "value": 2000, "transactionDate": "2022-01-04T22:00:00.000Z"},...]', () => {
     return request(app)
-      .get("/account/statement/period")
+      .get("/account/statment/period")
       .send({
-        id: accountId,
+        id: 166,
+        from: "2022-01-01",
+        to: "2022-01-10"
       })
-      .expect(200)
+      .expect(201)
       .then((res) => {
         expect(res.body).toEqual(
           expect.arrayContaining([
