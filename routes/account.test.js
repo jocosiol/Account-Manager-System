@@ -108,7 +108,7 @@ describe("AMS API", () => {
     return request(app)
       .get("/account/statment/period")
       .send({
-        id: 166,
+        id: accountId,
         from: "2022-01-01",
         to: "2022-01-10"
       })
