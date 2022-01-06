@@ -43,7 +43,7 @@
 ### [POST - "/account/create"] : Create an account and person/client.
 
 - **Expect:** _{person.name, person.document, person.birthDate, account.dailyWithdrawlLimit, account.accountType}._
-- **Return:** _Message: 'Person and Account successfully created'._
+- **Return:** _Object {personId , accountId}._
 
 ### [POST - "/account/deposit"] : Create a deposit.
 

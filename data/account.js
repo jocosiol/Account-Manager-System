@@ -1,7 +1,6 @@
 const { query } = require("../lib/db");
 const SQL = require("@nearform/sql");
 
-
 async function createNewPerson(name, document, birthDate) {
   try {
     const sql = SQL`INSERT INTO person (name, document, birthDate) VALUES (${name}, ${document}, STR_TO_DATE(${birthDate}, '%d-%m-%Y'))`;
@@ -63,6 +62,16 @@ async function newWithdraw(accountId, amountWithdraw) {
   }
 }
 
+async function dailyWithdraw(accountId) {
+  try {
+    const sql = SQL`SELECT SUM(value) as total from transaction WHERE accountId=${accountId} AND transactionDate = CURDATE() AND value<0`;
+    const dailyWithdraw = await query(sql);
+    return dailyWithdraw[0].total;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 async function blockAccount(id) {
   try {
     const sql = SQL`UPDATE account SET activeFlag=0 WHERE id=${id}`;
@@ -75,7 +84,7 @@ async function blockAccount(id) {
 
 async function getStatmentByAccountId(id) {
   try {
-    const sql =`SELECT id, value, transactionDate from transaction WHERE accountId=${id}`;
+    const sql = `SELECT id, value, transactionDate from transaction WHERE accountId=${id}`;
     const rows = await query(sql);
     return rows;
   } catch (err) {
@@ -85,7 +94,37 @@ async function getStatmentByAccountId(id) {
 
 async function getStatmentByAccountIdInPeriod(id, from, to) {
   try {
-    const sql =`SELECT id, value, transactionDate from transaction WHERE accountId=${id} AND transactionDate BETWEEN '${from}' AND '${to}';`;
+    const sql = `SELECT id, value, transactionDate from transaction WHERE accountId=${id} AND transactionDate BETWEEN '${from}' AND '${to}';`;
+    const rows = await query(sql);
+    return rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function deleteTransaction(accountId) {
+  try {
+    const sql = `DELETE FROM transaction WHERE accountId=${accountId}`;
+    const rows = await query(sql);
+    return rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function deleteAccount(personId) {
+  try {
+    const sql = `DELETE FROM account WHERE personId=${personId}`;
+    const rows = await query(sql);
+    return rows;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+async function deletePerson(personId) {
+  try {
+    const sql = `DELETE FROM person WHERE id=${personId}`;
     const rows = await query(sql);
     return rows;
   } catch (err) {
@@ -100,7 +139,11 @@ module.exports = {
   getAccountById,
   getBalanceByAccountId,
   newWithdraw,
+  dailyWithdraw,
   blockAccount,
   getStatmentByAccountId,
-  getStatmentByAccountIdInPeriod
+  getStatmentByAccountIdInPeriod,
+  deleteTransaction,
+  deleteAccount,
+  deletePerson,
 };

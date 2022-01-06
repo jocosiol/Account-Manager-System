@@ -15,6 +15,7 @@ const {
   validTransactionValue,
 } = require("../middleware/validTransactionValue");
 const { validAccountId } = require("../middleware/validAccountId");
+const { isMaxDailyWithdraw } = require("../middleware/isMaxDailyWithdraw");
 const Schemas = require("../schemas/allSchemas");
 
 router.post(
@@ -31,7 +32,9 @@ router.post(
         accountType,
         person.insertId
       );
-      res.status(201).json("Person and Account successfully created");
+      res
+        .status(201)
+        .json({ personId: person.insertId, accountId: account.insertId });
     } catch (err) {
       console.log(err);
     }
@@ -69,13 +72,14 @@ router.post(
   validateBody(Schemas.newWithdrawSchema),
   validTransactionValue,
   validAccountId,
+  isMaxDailyWithdraw,
   async (req, res) => {
     try {
       const { id, amountWithdraw } = req.body;
       const newBalance = await newWithdraw(id, amountWithdraw);
       res
         .status(201)
-        .send(`${amountWithdraw} have been withdrawn successfully`);
+        .json(`${amountWithdraw} have been withdrawn successfully`);
     } catch (err) {
       console.log(err);
     }
@@ -86,7 +90,7 @@ router.put("/block", validAccountId, async (req, res) => {
   try {
     const { id } = req.body;
     const blockedAccount = await blockAccount(id);
-    res.status(201).send(`Account ${id} has been blocked`);
+    res.status(201).json(`Account ${id} has been blocked`);
   } catch (err) {
     console.log(err);
   }

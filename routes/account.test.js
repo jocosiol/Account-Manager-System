@@ -1,35 +1,72 @@
 const request = require("supertest");
 const app = require("../server");
+const {
+  createNewPerson,
+  createNewAccount,
+  deleteTransaction,
+  deleteAccount,
+  deletePerson,
+} = require("../data/account");
 
 describe("AMS API", () => {
-  it("POST /account/create --> message", () => {
+  let newAccount;
+  let personId;
+  let accountId;
+
+  beforeAll(async () => {
+    newAccount = {
+      name: "James",
+      document: "007",
+      birthDate: "10-12-1990",
+      dailyWithdrawlLimit: 500,
+      accountType: 100,
+    };
+  });
+
+  afterAll(async () => {
+    await deleteTransaction(accountId);
+    await deleteAccount(personId);
+    await deletePerson(personId);
+  });
+
+  it("POST /account/create --> Object {personId, accountId}", () => {
     return request(app)
       .post("/account/create")
-      .send({
-        name: "Jon Bon",
-        document: "176987235",
-        birthDate: "10-12-1991",
-        dailyWithdrawlLimit: 500,
-        accountType: 100,
-      })
+      .send(newAccount)
       .expect("Content-Type", /json/)
-      .expect(201);
+      .expect(201)
+      .then((res) => {
+
+        personId=res.body.personId
+        accountId=res.body.accountId
+
+        expect(res.body).toEqual(
+            expect.objectContaining({
+              personId: expect.any(Number),
+              accountId: expect.any(Number)
+            })
+        );
+      });
   });
 
   it("POST /account/deposit --> message", () => {
     return request(app)
       .post("/account/deposit")
       .send({
-        id: 7,
+        id: accountId,
         amountDeposit: 1000,
       })
+      .expect("Content-Type", /json/)
       .expect(201);
   });
 
   it('GET /account/balance --> Object { "balance": number}', () => {
     return request(app)
       .get("/account/balance")
-      .expect(200)
+      .send({
+        id: accountId,
+      })
+      .expect(201)
       .then((res) => {
         expect(res.body).toEqual(
           expect.objectContaining({ balance: expect.any(Number) })
@@ -37,60 +74,64 @@ describe("AMS API", () => {
       });
   });
 
-  it("POST /account/:id/withdraw --> message", () => {
+  it("POST /account/withdraw --> message", () => {
     return request(app)
-      .post("/account/:id/withdraw")
+      .post("/account/withdraw")
       .send({
-        id: 1,
+        id: accountId,
         amountWithdraw: 100,
       })
       .expect("Content-Type", /json/)
       .expect(201);
   });
 
-  it("PUT /account/:id/block --> message", () => {
+  it('GET /account/statement --> Array of Object [{"id": 20, "value": 2000, "transactionDate": "2022-01-04T22:00:00.000Z"},...]', () => {
     return request(app)
-      .put("/account/:id/block")
+      .get("/account/statement")
       .send({
-        id: 1,
+        id: accountId,
+      })
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({
+              id: expect.any(Number),
+              value: expect.any(Number),
+              transactionDate: expect.any(String),
+            }),
+          ])
+        );
+      });
+  });
+
+  it('GET /account/statement/period --> Array of Object [{"id": 20, "value": 2000, "transactionDate": "2022-01-04T22:00:00.000Z"},...]', () => {
+    return request(app)
+      .get("/account/statement/period")
+      .send({
+        id: accountId,
+      })
+      .expect(200)
+      .then((res) => {
+        expect(res.body).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({
+              id: expect.any(Number),
+              value: expect.any(Number),
+              transactionDate: expect.any(String),
+            }),
+          ])
+        );
+      });
+  });
+
+  it("PUT /account/block --> message", () => {
+    return request(app)
+      .put("/account/block")
+      .send({
+        id: accountId,
       })
       .expect("Content-Type", /json/)
       .expect(201);
-  });
-
-  it('GET /account/:id/statement --> Array of Object [{"id": 20, "value": 2000, "transactionDate": "2022-01-04T22:00:00.000Z"},...]', () => {
-    return request(app)
-      .get("/account/:id/statement")
-      .expect("Content-Type", /json/)
-      .expect(200)
-      .then((res) => {
-        expect(res.body).toEqual(
-          expect.arrayContaining([
-            expect.objectContaining({
-              id: expect.any(Number),
-              value: expect.any(Number),
-              transactionDate: expect.any(String),
-            }),
-          ])
-        );
-      });
-  });
-
-  it('GET /account/:id/statement/period --> Array of Object [{"id": 20, "value": 2000, "transactionDate": "2022-01-04T22:00:00.000Z"},...]', () => {
-    return request(app)
-      .get("/account/:id/statement/period")
-      .expect("Content-Type", /json/)
-      .expect(200)
-      .then((res) => {
-        expect(res.body).toEqual(
-          expect.arrayContaining([
-            expect.objectContaining({
-              id: expect.any(Number),
-              value: expect.any(Number),
-              transactionDate: expect.any(String),
-            }),
-          ])
-        );
-      });
   });
 });
